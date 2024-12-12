@@ -45,7 +45,8 @@ else
 	if [ -d $(LINUX_DIR) ]; then \
 		rmdir $(LINUX_DIR); \
 	fi
-	ln -s $(CONFIG_EXTERNAL_KERNEL_TREE) $(LINUX_DIR)
+	-echo $(call qstrip,$(CONFIG_EXTERNAL_KERNEL_TREE)) | grep -E "^/\w+" && ln -snvf $(CONFIG_EXTERNAL_KERNEL_TREE) $(LINUX_DIR)
+	-echo $(call qstrip,$(CONFIG_EXTERNAL_KERNEL_TREE)) | grep -E "^/\w+" || ln -snvf "$(TOPDIR)/$(call qstrip,$(CONFIG_EXTERNAL_KERNEL_TREE))" $(LINUX_DIR)
   endef
 endif
 
