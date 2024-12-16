@@ -7,5 +7,7 @@
 define Device/D2000
   DEVICE_TITLE := D2000
   DTS_DIR := $(DTS_DIR)/phytium
+  KERNEL_NAME := uImage
+  KERNEL := kernel-bin
 endef
 TARGET_DEVICES += D2000

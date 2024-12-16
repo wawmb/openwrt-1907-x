@@ -17,6 +17,5 @@ define Target/Description
 endef
 
 include $(INCLUDE_DIR)/target.mk
-KERNELNAME:=Image
 
 $(eval $(call BuildTarget))

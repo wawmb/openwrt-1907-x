@@ -6,6 +6,7 @@
 #
 ARCH:=aarch64
 BOARDNAME:=Phytium D2000 Board (ARM64)
+KERNELNAME := uImage
 
 define Target/Description
 	Build firmware image for Xspeed Phytium D2000 Board.

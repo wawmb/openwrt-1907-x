@@ -1,10 +1,11 @@
 #!/bin/bash
-PROFILE=$1
-BIN_DIR=$2
-KDIR=$3
-LINUX_DIR=$4
-DTS_DIR=$5
-DEVICE_DTS=$6
+KERNELNAME=$1
+PROFILE=$2
+BIN_DIR=$3
+KDIR=$4
+LINUX_DIR=$5
+DTS_DIR=$6
+DEVICE_DTS=$7
 LOCAL_DIR=$(pwd)
 
 function RED() {
@@ -75,6 +76,13 @@ function mk_kernel_img {
 }
 
 show_info
+
+if [ "$KERNELNAME" == "uImage" ]; then
+	cp $KDIR/uImage-initramfs $BIN_DIR/auto-factory.bin
+else
+	cp $KDIR/vmlinux-initramfs $BIN_DIR/auto-factory.bin
+fi
+
 if find_substring "$PROFILE" "RA"; then
 	mk_kernel_img
 fi

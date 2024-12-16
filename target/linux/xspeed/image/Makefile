@@ -8,18 +8,17 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/image.mk
 
 include $(SUBTARGET).mk
-$(warning $(DEVICE_DTS))
+$(warning $(DEVICE_DTS) $(KERNELNAME))
 override DEVICE_DTS := $(DEVICE_DTS)
 
 define Image/Build/Initramfs
 	$(CP) $(KERNEL_BUILD_DIR)/vmlinux $(BIN_DIR)/$(IMG_PREFIX)$(if $(PROFILE_SANITIZED),-$(PROFILE_SANITIZED))-vmlinux
 	$(CP) $(KERNEL_BUILD_DIR)/vmlinux-initramfs $(BIN_DIR)/$(IMG_PREFIX)$(if $(PROFILE_SANITIZED),-$(PROFILE_SANITIZED))-vmlinux-initramfs
-	$(CP) $(KERNEL_BUILD_DIR)/vmlinux-initramfs $(BIN_DIR)/auto-factory.bin
+	[ -e $(TOPDIR)/scripts/xspeed/mk_kernel_img.sh ] && \
+		$(TOPDIR)/scripts/xspeed/mk_kernel_img.sh $(KERNELNAME) $(PROFILE) $(BIN_DIR) $(KDIR) $(LINUX_DIR) $(DTS_DIR) $(DEVICE_DTS)
 endef
 
 define Image/Build
-	[ -e $(TOPDIR)/scripts/xspeed/mk_kernel_img.sh ] && \
-		$(TOPDIR)/scripts/xspeed/mk_kernel_img.sh $(PROFILE) $(BIN_DIR) $(KDIR) $(LINUX_DIR) $(DTS_DIR) $(DEVICE_DTS)
 	$(call Image/Build/$(1))
 	cp $(KDIR)/root.$(1) $(BIN_DIR)/$(IMG_PREFIX)$(if $(PROFILE_SANITIZED),-$(PROFILE_SANITIZED)).img
 	cp $(KDIR)/vmlinux $(BIN_DIR)/$(IMG_PREFIX)$(if $(PROFILE_SANITIZED),-$(PROFILE_SANITIZED))-vmlinux
