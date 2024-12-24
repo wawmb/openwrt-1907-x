@@ -3,6 +3,10 @@
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
+#
+# $Id: Makefile 10812 2008-04-13 12:06:07Z olli $
+#
+# http://ftp.gnu.org/gnu/parted/parted-1.8.8.tar.bz2
 
 include $(TOPDIR)/rules.mk
 
@@ -13,17 +17,18 @@ PKG_RELEASE:=1
 PKG_INSTALL:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
-PKG_SOURCE_URL:=@GNU/$(PKG_NAME)
+PKG_SOURCE_URL:=https://ftp.gnu.org/gnu/parted/
+PKG_HASH:=e1298022472da5589b7f2be1d5ee3c1b66ec3d96dfbad03dc642afd009da5342
 
+include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
 
 define Package/parted
-  SECTION:=utils
-  CATEGORY:=Utilities
-  SUBMENU:=disc
-  TITLE:=parted Partition editor
+  SECTION:=base
+  CATEGORY:=X-Speed Modules
+  TITLE:=parted partition editor
   URL:=http://www.gnu.org/software/parted/index.shtml
-  DEPENDS:=+libblkid +libuuid
+  DEPENDS:=+libuuid +libblkid
 endef
 
 define Package/parted/description
@@ -37,6 +42,12 @@ define Build/Configure
 		--disable-device-mapper \
 		--disable-nls \
 	)
+
+endef
+
+define Build/Compile
+        $(MAKE) -C $(PKG_BUILD_DIR) $(TARGET_CONFIGURE_OPTS) \
+         CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -Dloff_t=off_t"
 endef
 
 define Package/parted/install	

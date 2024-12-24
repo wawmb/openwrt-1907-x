@@ -17,7 +17,7 @@ include $(INCLUDE_DIR)/kernel.mk
 define Package/eserial
   SECTION:=base
   CATEGORY:=X-Speed Modules
-  TITLE:= at cmd
+  TITLE:=eserial at cmd
 endef
 
 define Package/eserial/description
