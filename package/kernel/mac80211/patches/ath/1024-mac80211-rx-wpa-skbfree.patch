@@ -1,0 +1,27 @@
+Index: backports-2017-11-01/net/mac80211/rx.c
+===================================================================
+--- backports-2017-11-01.orig/net/mac80211/rx.c
++++ backports-2017-11-01/net/mac80211/rx.c
+@@ -1102,7 +1102,8 @@ static bool ieee80211_sta_manage_reorder
+ 
+ 	/* frame with out of date sequence number */
+ 	if (ieee80211_sn_less(mpdu_seq_num, head_seq_num)) {
+-		dev_kfree_skb(skb);
++		//dev_kfree_skb(skb);
++		ret = false;
+ 		goto out;
+ 	}
+ 
+Index: backports-2017-11-01/net/mac80211/wpa.c
+===================================================================
+--- backports-2017-11-01.orig/net/mac80211/wpa.c
++++ backports-2017-11-01/net/mac80211/wpa.c
+@@ -528,7 +528,7 @@ ieee80211_crypto_ccmp_decrypt(struct iee
+ 		if (res < 0 ||
+ 		    (!res && !(status->flag & RX_FLAG_ALLOW_SAME_PN))) {
+ 			key->u.ccmp.replays++;
+-			return RX_DROP_UNUSABLE;
++			//return RX_DROP_UNUSABLE;
+ 		}
+ 
+ 		if (!(status->flag & RX_FLAG_DECRYPTED)) {

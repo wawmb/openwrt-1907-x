@@ -1,0 +1,37 @@
+Index: backports-4.19.120-1/drivers/net/wireless/ath/ath10k/core.c
+===================================================================
+--- backports-4.19.120-1.orig/drivers/net/wireless/ath/ath10k/core.c
++++ backports-4.19.120-1/drivers/net/wireless/ath/ath10k/core.c
+@@ -1234,9 +1234,29 @@ static int ath10k_core_fetch_board_data_
+ 		return -EINVAL;
+ 	}
+ 
+-	ar->normal_mode_fw.board = ath10k_fetch_fw_file(ar,
+-							ar->hw_params.fw.dir,
+-							ar->hw_params.fw.board);
++	if (QCA6174_HW_3_2_VERSION == ar->hw_params.id && 
++		QCA6174_2_1_DEVICE_ID == ar->hw_params.dev_id) {
++		static int count = 1;
++		printk("------%x:%x------------\n", ar->hw_params.dev_id, ar->hw_params.id);
++		if (count == 1 ) {
++			count = 2;
++			ar->normal_mode_fw.board = ath10k_fetch_fw_file(ar,
++                                                        ar->hw_params.fw.dir,
++                                                        "board-A.bin");
++		} else {
++			count = 1;
++			ar->normal_mode_fw.board = ath10k_fetch_fw_file(ar,
++                                                        ar->hw_params.fw.dir,
++                                                        "board-B.bin");
++			
++		}
++	    
++	} else {
++		ar->normal_mode_fw.board = ath10k_fetch_fw_file(ar,
++                                                        ar->hw_params.fw.dir,
++                                                        ar->hw_params.fw.board);
++	}
++
+ 	if (IS_ERR(ar->normal_mode_fw.board))
+ 		return PTR_ERR(ar->normal_mode_fw.board);
+ 
