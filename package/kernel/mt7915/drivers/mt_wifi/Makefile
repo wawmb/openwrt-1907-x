@@ -241,7 +241,9 @@ include $(INCLUDE_DIR)/package.mk
 TAR_CMD=$(HOST_TAR) -C $(1)/ $(TAR_OPTIONS)
 
 define KernelPackage/mt_wifi
-  CATEGORY:=MTK Properties
+  CATEGORY:=X-Speed Kernel Modules
+  SUBMENU:=MTK Properties 7915
+  MENU:=1
   TITLE:=MTK wifi AP driver
   DEPENDS:= +wifi-profile
 ifneq ($(CONFIG_MTK_FAST_NAT_SUPPORT), )
@@ -263,9 +265,7 @@ endif
 else
   FILES:=$(PKG_BUILD_DIR)/mt_wifi_ap/mt_wifi.ko
   AUTOLOAD:=$(call AutoProbe,mt_wifi)
-endif  
-  SUBMENU:=Drivers
-  MENU:=1
+endif
 endef
 
 define KernelPackage/mt_wifi/config

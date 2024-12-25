@@ -17,13 +17,12 @@ PKG_LICENSE:=GPL-2.0
 include $(INCLUDE_DIR)/package.mk
 
 define Package/wifi-profile
-  SECTION:=MTK Properties
-  CATEGORY:=MTK Properties
-  SUBMENU:=Drivers
-  DEPENDS:=
+  CATEGORY:=X-Speed Kernel Modules
+  SUBMENU:=MTK Properties 7915
+  MENU:=1
   TITLE:=Build WiFi l1profile.data on demand & install wifi l2 profile.
   VERSION:=$(PKG_RELEASE)-$(REVISION)
-  MENU:=1
+  DEPENDS:=
 endef
 
 define Package/wifi-profile/description
