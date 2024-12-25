@@ -1,0 +1,13 @@
+Index: mt_wifi/mt_wifi/embedded/mgmt/bss_ops.c
+===================================================================
+--- mt_wifi.orig/mt_wifi/embedded/mgmt/bss_ops.c
++++ mt_wifi/mt_wifi/embedded/mgmt/bss_ops.c
+@@ -1184,7 +1184,7 @@ ULONG BssTableSetEntry(
+ 
+ 			if (
+ #ifdef CONFIG_STA_SUPPORT
+-				!STA_STATUS_TEST_FLAG(pStaCfg, fSTA_STATUS_MEDIA_STATE_CONNECTED) ||
++				(pStaCfg && !STA_STATUS_TEST_FLAG(pStaCfg, fSTA_STATUS_MEDIA_STATE_CONNECTED)) ||
+ #endif
+ #ifdef CONFIG_AP_SUPPORT
+ 				!OPSTATUS_TEST_FLAG(pAd, fOP_STATUS_MEDIA_STATE_CONNECTED) ||
