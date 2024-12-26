@@ -7,7 +7,6 @@
 # $Id: Makefile 10812 2008-04-13 12:06:07Z olli $
 #
 # http://ftp.gnu.org/gnu/parted/parted-1.8.8.tar.bz2
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=parted
@@ -24,11 +23,10 @@ include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
 
 define Package/parted
-  SECTION:=base
-  CATEGORY:=X-Speed Modules
-  TITLE:=parted partition editor
-  URL:=http://www.gnu.org/software/parted/index.shtml
-  DEPENDS:=+libuuid +libblkid
+	CATEGORY:=X-Speed Modules
+	TITLE:=parted partition editor
+	URL:=http://www.gnu.org/software/parted/index.shtml
+	DEPENDS:=+libuuid +libblkid
 endef
 
 define Package/parted/description
@@ -42,12 +40,11 @@ define Build/Configure
 		--disable-device-mapper \
 		--disable-nls \
 	)
-
 endef
 
 define Build/Compile
-        $(MAKE) -C $(PKG_BUILD_DIR) $(TARGET_CONFIGURE_OPTS) \
-         CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -Dloff_t=off_t"
+    $(MAKE) -C $(PKG_BUILD_DIR) $(TARGET_CONFIGURE_OPTS) \
+    CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -Dloff_t=off_t"
 endef
 
 define Package/parted/install	

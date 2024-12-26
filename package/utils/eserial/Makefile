@@ -3,7 +3,6 @@
 #
 # MTK Property Software.
 #
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=eserial
@@ -15,15 +14,13 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 define Package/eserial
-  SECTION:=base
-  CATEGORY:=X-Speed Modules
-  TITLE:=eserial at cmd
+	CATEGORY:=X-Speed Modules
+	TITLE:=eserial at cmd for lte ttyUSB
 endef
 
 define Package/eserial/description
-  at cmd for usb module
+	eserial at cmd for lte ttyUSB
 endef
-
 
 define Build/Prepare
 	mkdir -p $(PKG_BUILD_DIR)
@@ -34,6 +31,5 @@ define Package/eserial/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/eserial $(1)/usr/bin
 endef
-
 
 $(eval $(call BuildPackage,eserial))
