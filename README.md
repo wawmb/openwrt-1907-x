@@ -55,9 +55,9 @@ Build dependency: OpenWrt can only be built on a case-sensitive filesystem
 
 ```powershell
 # 以管理员身份打开终端
-PS > fsutil.exe file setCaseSensitiveInfo <your_local_lede_path> enable
-# 将本项目 git clone 到开启了大小写敏感的目录 <your_local_lede_path> 中
-PS > git clone git@github.com:wawmb/OpenWrt-1907-X.git <your_local_lede_path>
+PS > fsutil.exe file setCaseSensitiveInfo <your_local_path> enable
+# 将本项目 git clone 到开启了大小写敏感的目录 <your_local_path> 中
+PS > git clone https://github.com/wawmb/openwrt-1907-x.git <your_local_path>
 ```
 
 > 对已经 `git clone` 完成的项目目录执行 `fsutil.exe` 命令无法生效，大小写敏感只对新增的文件变更有效。
