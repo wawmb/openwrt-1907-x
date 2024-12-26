@@ -47,6 +47,7 @@ include $(INCLUDE_DIR)/package.mk
 WMENU:=Wireless Drivers
 
 define KernelPackage/mac80211/Default
+  CATEGORY:=X-Speed Kernel Modules
   SUBMENU:=$(WMENU)
   URL:=https://wireless.wiki.kernel.org/
   MAINTAINER:=Felix Fietkau <nbd@nbd.name>

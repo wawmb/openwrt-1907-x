@@ -22,8 +22,9 @@ SCAN_DEPS = *.mk
 include $(INCLUDE_DIR)/package.mk
 
 define Package/firmware-default
+  CATEGORY:=X-Speed Kernel Modules
+  SUBMENU:=Firmware
   SECTION:=firmware
-  CATEGORY:=Firmware
   URL:=http://git.kernel.org/cgit/linux/kernel/git/firmware/linux-firmware.git
   TITLE:=$(1)
 endef
