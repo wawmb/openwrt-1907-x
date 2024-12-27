@@ -1,0 +1,18 @@
+/************************************************************************************************
+DESCRIPTION:
+  GobiNet driver for USB rmnet of FIBOCOM wireless cellular modules.
+*************************************************************************************************/
+
+=================================================================================================
+
+                            Version Record
+  This section contains version comments describing changes made to the module.
+  Notice that  changes are listed in reverse chronological order.
+
+
+Version       			When         Modification 
+--------------------    --------     ------------------------------------------------------------
+Diaggrab_TooL_V2.0.0    02/08/21     Update to version 2.0 for Optimization driver
+
+
+=================================================================================================
