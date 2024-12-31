@@ -1,4 +1,4 @@
-TARGET = Motorcomm_NIC_Burn_Helper
+TARGET = yt-led-tool
 
 INC_DIR = -I . \
 		  -I ./common \

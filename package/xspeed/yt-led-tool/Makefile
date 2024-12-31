@@ -32,7 +32,8 @@ endef
 define Package/yt-led-tool/install
 	$(INSTALL_DIR) $(1)/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/yt6801.cfg $(1)/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/Motorcomm_NIC_Burn_Helper $(1)/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/yt-led-tool $(1)/sbin
+	ln -s yt-led-tool $(1)/sbin/Motorcomm_NIC_Burn_Helper
 endef
 
 $(eval $(call BuildPackage,yt-led-tool))
