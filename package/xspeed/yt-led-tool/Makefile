@@ -6,7 +6,7 @@
 #
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=yt-mac-tool
+PKG_NAME:=yt-led-tool
 PKG_RELEASE:=1
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
@@ -14,14 +14,14 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-define Package/yt-mac-tool
+define Package/yt-led-tool
 	CATEGORY:=X-Speed Modules
-	TITLE:=yt-mac-tool write mac for yt6801
+	TITLE:=Motorcomm NIC Burn Helper yt-led-tool for yt6801
 	DEPENDS:=+libpci +libstdcpp
 endef
 
-define Package/yt-mac-tool/description
-	yt-mac-tool write mac for yt6801
+define Package/yt-led-tool/description
+	Motorcomm NIC Burn Helper yt-led-tool for yt6801
 endef
 
 define Build/Prepare
@@ -29,9 +29,10 @@ define Build/Prepare
 	$(CP) ./src/* $(PKG_BUILD_DIR)/
 endef
 
-define Package/yt-mac-tool/install
+define Package/yt-led-tool/install
 	$(INSTALL_DIR) $(1)/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/yt-mac-tool $(1)/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/yt6801.cfg $(1)/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/Motorcomm_NIC_Burn_Helper $(1)/sbin
 endef
 
-$(eval $(call BuildPackage,yt-mac-tool))
+$(eval $(call BuildPackage,yt-led-tool))
