@@ -1719,7 +1719,7 @@ char *index_changefile_bmp2bin(char *path, char *pw, char *ph)
 
 void usage(const char *app)
 {
-    printf("\nUsage:\tttyUSB0-9\tttyAMA0-9\tttyS0-9\n", app);
+    printf("\nUsage:\tttyUSB0-9\tttyAMA0-9\tttyS0-9\n");
     printf("\nUsage:\t%s -h\n", app);
     printf("\tprintf help informations\n");
     printf("\n");
