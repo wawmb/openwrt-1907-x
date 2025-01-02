@@ -1,0 +1,30 @@
+config interface 'loopback'
+        option ifname 'lo'
+        option proto 'static'
+        option ipaddr '127.0.0.1'
+        option netmask '255.0.0.0'
+
+config globals 'globals'
+        option ula_prefix 'fd0f:8a53:2619::/48'
+
+config interface 'wan'
+        option ifname 'wan'
+        option proto 'dhcp'
+
+config interface 'lte'
+        option ifname 'usb0'
+	option metric '2'
+        option proto 'dhcp'
+	option disabled '1'
+
+config interface 'wwan'
+	option metric '2'
+        option proto 'dhcp'
+
+config interface 'ppp'
+        option proto '3g'
+        option device '/dev/ttyUSB0'
+        option service 'umts'
+        option pppname 'ppp'
+        option metric '2'
+        option disabled '1'
