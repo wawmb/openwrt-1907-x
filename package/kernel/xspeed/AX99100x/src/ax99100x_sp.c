@@ -1281,15 +1281,10 @@ static void receive_chars_dma_done(struct uart_99100_port * up, int iirg)
 #else
 	struct tty_struct *tty = up->port.state->port.tty;
 #endif
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,9,0)
+
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 9, 0)) || defined(__arm__) || defined(__aarch64__)
 	u8 ch;
 #endif
-
-#if defined(__arm__) || defined(__aarch64__)
-	u8 ch;
-#endif
-
-
 
 	int i;		
 	u32 received_bytes;
