@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# Copyright (C) 2025 Dustin <huangyanjie@x-speed.com.cn>
+#
 
 display_system_info() {
 	echo
@@ -8,6 +11,7 @@ display_system_info() {
 	echo "        System Version : $(cat /etc/os-release | grep -w 'PRETTY_NAME' | cut -d= -f2 | tr -d '"')"
 	echo "        Kernel Version : $(uname -r)"
 	echo "        HW Machine     : $(uname -m)"
+	echo "        Board Name     : $(cat /etc/os-release | grep -w 'OPENWRT_BOARD' | cut -d= -f2 | tr -d '"')"
 	echo "        Memory         : $(free -h | awk '/^Mem:/ { print $3 "/" $2 }')"
 	echo
 	echo "        Disk Usage Ranking:"

@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+# Copyright (C) 2025 Dustin <huangyanjie@x-speed.com.cn>
+#
+
+rename_network() {
+    blkdev_f=$(cat /factory_env | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
+    blkdev_c=$(cat /proc/cmdline | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
+
+    if [ -z "${blkdev_f}" ]; then
+        blkdev=${blkdev_c}
+    else
+        blkdev=${blkdev_f}
+    fi
+    echo "rename_network: The rootdev is [${blkdev}] !" | tee /dev/kmsg
+
+    if [ -b "$blkdev" ]; then
+        mount "$blkdev" /mnt
+        file="/mnt/rename_network.sh"
+        if [ -e "$file" ]; then
+            echo "rename_network: Starting ${file} script !" | tee /dev/kmsg
+            chmod +x "$file"
+            . "$file"
+        fi
+        umount /mnt
+    fi
+}
+
+for if_name in $(ls /sys/class/net | grep -E '^(GE|eth)'); do
+    ifconfig $if_name down
+done
+
+TARGET=$(cat /etc/os-release | grep -w 'OPENWRT_BOARD' | cut -d= -f2 | tr -d '"')
+# xspeed/d2000 xspeed/e2000
+# xspeed/nhxx_autotest xspeed/nhxx_NH15 xspeed/nhxx_NH25-aut xspeed/nhxx_NZXX-ate
+# xspeed/nzxx_autotest xspeed/nzxx_gen-auto xspeed/nzxx_nz60-aut
+# xspeed/raxx
+
+case "$TARGET" in
+xspeed/n*)
+    n=0
+    i=$(ls /sys/class/net | grep -E '^(GE|eth)' | wc -l)
+    while [ $n -le $i ]; do
+
+        name="eth""$n"
+        newname="GE""$n"
+        ip link set $name name $newname
+        let ++n
+    done
+    ;;
+*) ;;
+esac
+
+rename_network
+
+for if_name in $(ls /sys/class/net | grep -E '^(GE|eth)'); do
+    ifconfig $if_name up
+done
+
+exit 0
