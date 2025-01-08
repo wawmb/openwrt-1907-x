@@ -7,5 +7,7 @@
 define Device/NH29
   DEVICE_TITLE := NH29
   DTS_DIR := $(DTS_DIR)/freescale/
+  KERNEL_NAME := Image
+  KERNEL := kernel-bin
 endef
 TARGET_DEVICES += NH29

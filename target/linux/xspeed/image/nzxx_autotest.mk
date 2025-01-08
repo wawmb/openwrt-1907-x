@@ -7,5 +7,7 @@
 define Device/NZ50
   DEVICE_TITLE := NZ50
   DTS_DIR := $(DTS_DIR)/freescale/
+  KERNEL_NAME := Image
+  KERNEL := kernel-bin
 endef
 TARGET_DEVICES += NZ50
