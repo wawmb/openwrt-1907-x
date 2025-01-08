@@ -20,8 +20,8 @@ display_system_info() {
 	echo
 	echo "        NetWork Information:"
 	echo "        ------------------------------------------------------"
-	a=$(ifconfig -a | grep -E '^[a-z]' | awk '{print $1}' | grep -v 'lo')
-	b=$(ifconfig -a | grep 'HWaddr' | awk '{print $NF}')
+	a=$(ifconfig -a | grep 'HWaddr' | sort -V | awk '{print $1}' | grep -v 'lo')
+	b=$(ifconfig -a | grep 'HWaddr' | sort -V | awk '{print $NF}')
 	i=0
 	for iface in $a; do
 		IP=$(ifconfig "$iface" | grep 'inet addr' | awk '{print $2}')
