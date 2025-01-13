@@ -6,7 +6,7 @@
 #
 ARCH:=aarch64
 BOARDNAME:=NXP lsdk-2012_nz60-autotest Board (ARM64)
-KERNELNAME:=Image
+KERNELNAME:=Image dtbs
 
 define Target/Description
 	Build firmware image for Xspeed NXP lsdk-2012_nz60-autotest Board.

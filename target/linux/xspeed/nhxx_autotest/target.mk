@@ -6,7 +6,7 @@
 #
 ARCH:=aarch64
 BOARDNAME:=NXP lsdk-1903_autotest Board (ARM64)
-KERNELNAME:=Image
+KERNELNAME:=Image dtbs
 
 define Target/Description
 	Build firmware image for Xspeed NXP lsdk-1903_autotest Board.
