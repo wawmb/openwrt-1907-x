@@ -1,0 +1,6 @@
+NF51XX nf5180
+========================
+Run the following command in this path:
+
+    git clone git@192.168.139.200:platform/net/switch/nf51xx.git
+    git checkout dev_10.1.3
