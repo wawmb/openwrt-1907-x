@@ -18,7 +18,7 @@ define KernelPackage/nf51xx
 	DEPENDS:=+libc +libpthread
 	TITLE:=NF51xx nf5180 Controller
 	FILES:=$(PKG_BUILD_DIR)/nf51xx/build/arm64el_xspeed_linux419_kernel/sdk_linuxkm.ko
-	AUTOLOAD:=$(call AutoLoad,30,nf51xx)
+	AUTOLOAD:=$(call AutoLoad,31,sdk_linuxkm)
 	KCONFIG:=
 endef
 
