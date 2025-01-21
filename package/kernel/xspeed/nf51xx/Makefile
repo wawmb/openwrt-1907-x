@@ -38,7 +38,7 @@ endef
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR)/nf51xx arm64el_xspeed_linux419_kernel \
-	$(MAKE_OPTS) 
+	$(MAKE_OPTS)
 endef
 
 define KernelPackage/nf51xx/install
