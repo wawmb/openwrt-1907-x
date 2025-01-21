@@ -1,5 +1,5 @@
-src-git packages git@github.com:wawmb/packages.git;openwrt-19.07-x
-src-git luci git@github.com:wawmb/luci.git;openwrt-19.07
-src-git routing git@github.com:wawmb/routing.git;openwrt-19.07
-src-git telephony git@github.com:wawmb/telephony.git;openwrt-19.07
-src-git freifunk git@github.com:wawmb/openwrt-packages.git;openwrt-19.07
+src-git packages ssh://git@ssh.github.com:443/wawmb/packages.git;openwrt-19.07-x
+src-git luci ssh://git@ssh.github.com:443/wawmb/luci.git;openwrt-19.07
+src-git routing ssh://git@ssh.github.com:443/wawmb/routing.git;openwrt-19.07
+src-git telephony ssh://git@ssh.github.com:443/wawmb/telephony.git;openwrt-19.07
+src-git freifunk ssh://git@ssh.github.com:443/wawmb/openwrt-packages.git;openwrt-19.07
