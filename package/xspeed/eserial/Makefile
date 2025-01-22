@@ -1,7 +1,8 @@
 #
-# Copyright (C) 2010-2013 hua.shao@mediatek.com
+# Copyright (C) 2024 OpenWrt.org
 #
-# MTK Property Software.
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
 #
 include $(TOPDIR)/rules.mk
 

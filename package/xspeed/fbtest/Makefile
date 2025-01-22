@@ -1,27 +1,26 @@
 #
-# Copyright (C) 2012 OpenWrt.org
+# Copyright (C) 2025 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fbtest
 PKG_RELEASE:=1
 
-PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/kernel.mk
 
 define Package/fbtest
-  SECTION:=utils
-  CATEGORY:=Utilities
-  TITLE:=Frame buffer device testing tool
-  DEPENDS:=@DISPLAY_SUPPORT
+	CATEGORY:=X-Speed Modules
+	TITLE:=Frame buffer device testing tool
 endef
 
-define Build/Configure
+define Package/eserial/description
+	Frame buffer device testing tool
 endef
 
 define Build/Compile
@@ -32,8 +31,8 @@ define Build/Compile
 endef
 
 define Package/fbtest/install
-	$(INSTALL_DIR) $(1)/usr/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/fbtest $(1)/usr/sbin/
+	$(INSTALL_DIR) $(1)/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/fbtest $(1)/sbin/
 endef
 
 $(eval $(call BuildPackage,fbtest))
