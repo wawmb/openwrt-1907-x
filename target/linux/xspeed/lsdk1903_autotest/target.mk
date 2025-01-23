@@ -10,5 +10,5 @@ KERNELNAME:=Image dtbs
 
 define Target/Description
 	Build firmware image for Xspeed NXP lsdk-1903_autotest Board.
-	Ps: Other models use this branch
+	Ps: NXP other models: all use this branch
 endef

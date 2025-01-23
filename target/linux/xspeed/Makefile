@@ -8,7 +8,7 @@ include $(TOPDIR)/rules.mk
 BOARD:=xspeed
 BOARDNAME:=Xspeed Board
 FEATURES:=fpu usb pci pcie gpio nand squashfs ramdisk targz rtc ubifs ext4
-SUBTARGETS:=d2000 e2000 raxx nhxx_NH15 nhxx_NH25-aut nhxx_NZXX-ate nhxx_autotest nzxx_autotest nzxx_gen-auto nzxx_nz60-aut
+SUBTARGETS:=kernel_raxx linux4197_d2000 linux419246_e2000 lsdk1903_autotest lsdk1903_NH15 lsdk1903_NH25_autotest lsdk1903_nzxx_ate lsdk2012_autotest lsdk2012_gen_autotest lsdk2012_nz60_autotest
 
 KERNEL_PATCHVER:=4.19
 
