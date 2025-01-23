@@ -300,6 +300,7 @@ endif
 ifdef CONFIG_TARGET_ROOTFS_CPIOGZ
   define Image/Build/cpiogz
 	( cd $(TARGET_DIR); find . | cpio -o -H newc -R root:root | gzip -9n >$(BIN_DIR)/$(IMG_PREFIX)-rootfs.cpio.gz )
+	cp $(BIN_DIR)/$(IMG_PREFIX)-rootfs.cpio.gz $(BIN_DIR)/cpio.gz
   endef
 endif
 
