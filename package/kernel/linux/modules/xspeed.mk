@@ -2,12 +2,11 @@ XSPEED_MENU:=X-Speed Kernel Modules
 
 define KernelPackage/marvell_dsa
   CATEGORY:=$(XSPEED_MENU)
-  TITLE:=Marvell NXP Support motorcomm dsa 617x mv88e6xxx
-  KCONFIG:=CONFIG_NET_DSA CONFIG_NET_DSA_MV88E6XXX CONFIG_MARVELL_PHY CONFIG_MOTORCOMM_PHY CONFIG_MARVELL_10G_PHY \
+  TITLE:=Marvell NXP Support dsa 617x mv88e6xxx
+  KCONFIG:=CONFIG_NET_DSA CONFIG_NET_DSA_MV88E6XXX CONFIG_MARVELL_PHY CONFIG_MARVELL_10G_PHY \
 	         CONFIG_NET_DSA_MV88E6XXX_GLOBAL2=y CONFIG_NET_DSA_TAG_DSA=y CONFIG_NET_DSA_TAG_EDSA=y
   FILES:=$(LINUX_DIR)/drivers/net/dsa/mv88e6xxx/mv88e6xxx.ko $(LINUX_DIR)/net/dsa/dsa_core.ko \
-         $(LINUX_DIR)/drivers/net/phy/marvell.ko $(LINUX_DIR)/drivers/net/phy/motorcomm.ko \
-         $(LINUX_DIR)/drivers/net/phy/marvell10g.ko
+         $(LINUX_DIR)/drivers/net/phy/marvell.ko $(LINUX_DIR)/drivers/net/phy/marvell10g.ko
   AUTOLOAD:=$(call AutoLoad,60,marvell motorcomm dsa_core mv88e6xxx marvell10g)
 endef
 define KernelPackage/marvell_dsa/description
@@ -15,6 +14,19 @@ define KernelPackage/marvell_dsa/description
   Including motorcomm dsa_core 617x mv88e6xxx marvell10g Ethernet Support.
 endef
 $(eval $(call KernelPackage,marvell_dsa))
+
+define KernelPackage/motorcomm_phy
+  CATEGORY:=$(XSPEED_MENU)
+  TITLE:=motorcomm phy driver support
+  KCONFIG:=CONFIG_MOTORCOMM_PHY
+  FILES:=$(LINUX_DIR)/drivers/net/phy/motorcomm.ko
+  AUTOLOAD:=$(call AutoLoad,60,motorcomm)
+endef
+define KernelPackage/motorcomm_phy/description
+  Kernel modules for NXP(NZXX)
+  Including motorcomm phy driver support.
+endef
+$(eval $(call KernelPackage,motorcomm_phy))
 
 define KernelPackage/fuxi
   CATEGORY:=$(XSPEED_MENU)

@@ -77,10 +77,11 @@ function mk_kernel_img {
 
 show_info
 
-if [ "$KERNELNAME" == "uImage" ]; then
-	cp $KDIR/uImage-initramfs $BIN_DIR/auto-factory.bin
+KERNEL_NAME=$(echo "$1" | awk '{print $1}')
+if [ -n "$KERNEL_NAME" ]; then
+	cp "$KDIR/$KERNEL_NAME-initramfs" "$BIN_DIR/auto-factory.bin"
 else
-	cp $KDIR/vmlinux-initramfs $BIN_DIR/auto-factory.bin
+	echo "KERNEL_NAME is empty, not copying the file."
 fi
 
 if find_substring "$PROFILE" "RA"; then
