@@ -163,6 +163,22 @@ function Pull_All_Projects() {
         echo "Git pull failed. Check the error message."
         exit 1
     fi
+
+    nf51xx_path=$(realpath "$script_dir/package/kernel/xspeed/nf51xx/src/nf51xx")
+    if [ -d "$nf51xx_path" ]; then
+        cd $nf51xx_path
+    else
+        echo "Project [$nf51xx_path] does not exist."
+        return 0
+    fi
+    git branch
+    git pull
+    if [ $? -eq 0 ]; then
+        echo "Git pull project [$PWD] succeeded."
+    else
+        echo "Git pull failed. Check the error message."
+        exit 1
+    fi
 }
 
 function Export_The_Build_Files() {
