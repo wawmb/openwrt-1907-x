@@ -1,0 +1,11 @@
+--- a/drivers/net/wireless/ath/ath9k/debug.c
++++ b/drivers/net/wireless/ath/ath9k/debug.c
+@@ -1412,7 +1412,7 @@ static ssize_t read_file_eeprom(struct file *file, char __user *user_buf,
+ 		} else {
+ 			bytes = 2;
+ 		}
+-		copy_to_user(user_buf, from, bytes);
++		i = copy_to_user(user_buf, from, bytes);
+ 		user_buf += bytes;
+ 	}
+ 	return *ppos - pos;
