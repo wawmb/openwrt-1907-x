@@ -6,7 +6,6 @@ KDIR=$4
 LINUX_DIR=$5
 DTS_DIR=$6
 DEVICE_DTS=$7
-LOCAL_DIR=$(pwd)
 
 function RED() {
 	echo -e "\033[31m$@\033[0m"
@@ -47,31 +46,61 @@ function show_info {
 	RED "${border}"
 }
 
-function mk_kernel_img {
-	if [ -f $KDIR/Image ]; then
-		cp $KDIR/Image $LINUX_DIR
+function rockchip_build_kernel_image {
+	cp $KDIR/Image $LINUX_DIR
+	rm $LINUX_DIR/resource.img
+
+	script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+	target_file="${script_dir}/../../configs/.target.cfg"
+	if [ -s "$target_file" ]; then
+		rockchip_board=$(cat "$target_file" | awk -F '|' '{gsub(/^[ \t]+|[ \t]+$/, "", $1); gsub(/[ \t]+/, "", $4); print $4}')
+	else
+		RED "File [$target_file] does not exist or is empty."
+		exit 1
 	fi
 
-	if [ -f $KDIR/image-${DEVICE_DTS}.dtb ]; then
-		cp $KDIR/image-${DEVICE_DTS}.dtb $DTS_DIR/${DEVICE_DTS}.dtb
-	fi
+	case "$rockchip_board" in
+	RA01)
+		board_dts=rk3566-xspeed-ra01-v010-linux_cfg1
+		;;
+	RA02)
+		board_dts=rk3568-xspeed-ra02-v010-linux_cfg1
+		;;
+	RA03)
+		board_dts=rk3568-xspeed-ra03-v010-linux_cfg1
+		;;
+	RA05)
+		board_dts=rk3566-xspeed-ra05-v010-linux_cfg1
+		;;
+	RA06)
+		board_dts=rk3566-xspeed-ra06-v010-linux_cfg1
+		;;
+	RA08)
+		board_dts=rk3568-xspeed-ra08-v010-linux_cfg1
+		;;
+	"")
+		break
+		;;
+	esac
 
-	if [ -f $LINUX_DIR/resource.img ]; then
-		rm $LINUX_DIR/resource.img
+	BLUE "Use $DTS_DIR/rockchip/${board_dts}.dtb!"
+	if [ ! -f $DTS_DIR/rockchip/${board_dts}.dtb ]; then
+		RED "File $DTS_DIR/rockchip/${board_dts}.dtb does not exist. Exiting..."
+		exit 1
 	fi
 
 	if [ -f $LINUX_DIR/scripts/resource_tool ]; then
-		$LINUX_DIR/scripts/resource_tool $DTS_DIR/${DEVICE_DTS}.dtb $LINUX_DIR/logo.bmp $LINUX_DIR/logo_kernel.bmp
+		$LINUX_DIR/scripts/resource_tool $DTS_DIR/rockchip/${board_dts}.dtb $LINUX_DIR/logo.bmp $LINUX_DIR/logo_kernel.bmp
 		mv resource.img $LINUX_DIR
-		echo "pack resource.img"
+		BLUE "Pack resource.img!"
 	fi
 
 	if [ -f $LINUX_DIR/resource.img ]; then
 		$LINUX_DIR/scripts/mkbootimg --kernel $LINUX_DIR/Image --second $LINUX_DIR/resource.img -o $LINUX_DIR/boot.img
-		cp $(LINUX_DIR)/boot.img $(BIN_DIR)/boot.img
-		echo "pack boot.img"
+		cp $LINUX_DIR/boot.img $BIN_DIR/boot.img
+		BLUE "Pack boot.img!"
 	else
-		echo "resource.img not exit"
+		RED "$LINUX_DIR/resource.img is not exit."
 	fi
 }
 
@@ -81,9 +110,9 @@ KERNEL_NAME=$(echo "$1" | awk '{print $1}')
 if [ -n "$KERNEL_NAME" ]; then
 	cp "$KDIR/$KERNEL_NAME-initramfs" "$BIN_DIR/auto-factory.bin"
 else
-	echo "KERNEL_NAME is empty, not copying the file."
+	RED "KERNEL_NAME is empty, not copying the file."
 fi
 
 if find_substring "$PROFILE" "RA"; then
-	mk_kernel_img
+	rockchip_build_kernel_image
 fi
