@@ -18,23 +18,24 @@
    uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
    ```
 
-3. 下载 dl 库，编译固件
-
-   ```bash
-   #可选操作，可以不更新，大部分软件包已加入GIT管控
-   ./scripts/feeds update -a  
-   ./scripts/feeds install -a 
-   make download -j8
-   ```
-4. 下载源代码，更新 feeds 并选择配置
-（-j 后面是线程数，第一次编译推荐用单线程）
+3. 下载源代码
 
    ```bash
    git clone https://github.com/wawmb/openwrt-1907-x.git
    cd openwrt-1907-x
-   make menuconfig
-   make V=s -j1
-   make V=s -j$(nproc)
+   ```
+
+4. 更新 feeds
+
+   ```bash
+   ./scripts/feeds update -a  
+   ./scripts/feeds install -a 
+   ```
+
+5. 使用编译脚本并选择配置
+
+   ```bash
+   ./build.sh
    ```
 
 ### 使用 WSL/WSL2 进行编译

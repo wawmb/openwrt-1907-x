@@ -33,3 +33,4 @@ package/utils/auto-factory/
 /feeds/routing.tmp
 package/kernel/xspeed/nf51xx/src/nf51xx
 configs/.target.cfg
+rockdev/u-boot
