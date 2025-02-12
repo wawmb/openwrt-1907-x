@@ -34,7 +34,7 @@ endef
 
 define Build/Configure
 	cd $(PKG_BUILD_DIR) && ./autogen
-	cd $(PKG_BUILD_DIR) && ./configure --enable-extfs
+	cd $(PKG_BUILD_DIR) && ./configure --enable-extfs --enable-fat --enable-xfs
 endef
 
 define Build/Compile
@@ -43,8 +43,11 @@ define Build/Compile
 endef
 
 define Package/partclone/install	
-	$(INSTALL_DIR) $(1)/usr/sbin	
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/sbin/* $(1)/usr/sbin
+	$(INSTALL_DIR) $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/sbin/partclone.info $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/sbin/partclone.extfs $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/sbin/partclone.fat $(1)/usr/sbin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/sbin/partclone.xfs $(1)/usr/sbin
 endef
 
 $(eval $(call BuildPackage,partclone))
