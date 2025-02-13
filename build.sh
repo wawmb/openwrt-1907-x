@@ -58,7 +58,7 @@ function Obtain_Config_Info() {
         kernel_path=$(cat "$target_file" | awk -F '|' '{gsub(/^[ \t]+|[ \t]+$/, "", $1); gsub(/[ \t]+/, "", $2); print $2}')
         kernel_branch=$(cat "$target_file" | awk -F '|' '{gsub(/^[ \t]+|[ \t]+$/, "", $1); gsub(/[ \t]+/, "", $3); print $3}')
     else
-        echo "File [.target.cfg] does not exist or is empty."
+        RED "File [.target.cfg] does not exist or is empty."
         exit 1
     fi
 }
@@ -87,21 +87,21 @@ function Switch_Kernel_Branch() {
     if [ -d "$path" ]; then
         cd $path
     else
-        echo "Project [$path] does not exist."
+        RED "Project [$path] does not exist."
         exit 1
     fi
 
     if [ "$kernel_branch" != "" ]; then
         # if ! git show-ref --quiet refs/heads/"$kernel_branch"; then #本地分支
         if ! git ls-remote --exit-code --heads origin "$kernel_branch" >/dev/null; then #远程分支
-            echo "Specified branch [$kernel_branch] does not exist."
+            RED "Specified branch [$kernel_branch] does not exist."
             exit 1
         fi
         git checkout "$kernel_branch"
         if [ $? -eq 0 ]; then
-            echo "Switching to kernel: [$path] branch: [$kernel_branch] Succeeded."
+            BLUE "Switching to kernel: [$path] branch: [$kernel_branch] Succeeded."
         else
-            echo "Git pull failed. Check the error message."
+            RED "Git pull failed. Check the error message."
             exit 1
         fi
     fi
@@ -118,9 +118,9 @@ function Build_OpenWrt-X() {
     make defconfig
     make -j $(nproc)
     if [ $? -eq 0 ]; then
-        echo "======================= Build OpenWrt-X Succeeded ======================="
+        BLUE "======================= Build OpenWrt-X Succeeded ======================="
     else
-        echo "================== Build OpenWrt-X Failed. Please Check =================="
+        RED "================== Build OpenWrt-X Failed. Please Check =================="
         exit 1
     fi
 }
@@ -130,9 +130,9 @@ function Pull_All_Projects() {
     git branch
     git pull
     if [ $? -eq 0 ]; then
-        echo "Git pull project [$PWD] succeeded."
+        BLUE "Git pull project [$PWD] succeeded."
     else
-        echo "Git pull failed. Check the error message."
+        RED "Git pull failed. Check the error message."
         exit 1
     fi
 
@@ -140,15 +140,15 @@ function Pull_All_Projects() {
     if [ -d "$kernel_path" ]; then
         cd $kernel_path
     else
-        echo "Project [$kernel_path] does not exist."
+        RED "Project [$kernel_path] does not exist."
         exit 1
     fi
     git branch
     git pull
     if [ $? -eq 0 ]; then
-        echo "Git pull project [$PWD] succeeded."
+        BLUE "Git pull project [$PWD] succeeded."
     else
-        echo "Git pull failed. Check the error message."
+        RED "Git pull failed. Check the error message."
         exit 1
     fi
 
@@ -162,9 +162,9 @@ function Pull_All_Projects() {
     git branch
     git pull
     if [ $? -eq 0 ]; then
-        echo "Git pull project [$PWD] succeeded."
+        BLUE "Git pull project [$PWD] succeeded."
     else
-        echo "Git pull failed. Check the error message."
+        RED "Git pull failed. Check the error message."
         exit 1
     fi
 
@@ -178,9 +178,9 @@ function Pull_All_Projects() {
     git branch
     git pull
     if [ $? -eq 0 ]; then
-        echo "Git pull project [$PWD] succeeded."
+        BLUE "Git pull project [$PWD] succeeded."
     else
-        echo "Git pull failed. Check the error message."
+        RED "Git pull failed. Check the error message."
         exit 1
     fi
 }
@@ -204,11 +204,11 @@ function Export_The_Build_Files() {
 
     mkdir $export_path
     if [ ! -d "$build_path" ]; then
-        echo "Path [$build_path] does not exist, Please verify."
+        RED "Path [$build_path] does not exist, Please verify."
         exit 1
     fi
 
-    default_files=("auto-factory.bin" "cpio.gz" "vmlinux")
+    default_files=("auto-factory.bin" "cpio.gz" "vmlinux" "*-update.img")
     specify=false
     current_path=$(pwd)
     echo -e "Build Path is \e[34m $build_path \e[0m"
@@ -229,18 +229,28 @@ function Export_The_Build_Files() {
 
     for file in "${files_to_copy[@]}"; do
         if $specify; then
-            if [[ -f "$current_path/$file" ]]; then
-                cp "$current_path/$file" "$export_path"
-                echo "Copied (from current path): $file"
+            if [[ "$file" == *\** ]]; then
+                cp "$current_path/"$file "$export_path"
+                echo "Copied (wildcard file from current path): $file"
             else
-                echo "File not found in current path: $file"
+                if [[ -f "$current_path/$file" ]]; then
+                    cp "$current_path/$file" "$export_path"
+                    echo "Copied (from current path): $file"
+                else
+                    RED "File not found in current path: $file"
+                fi
             fi
         else
-            if [[ -f "$build_path/$file" ]]; then
-                cp "$build_path/$file" "$export_path"
-                echo "Copied (from build path): $file"
+            if [[ "$file" == *\** ]]; then
+                cp "$build_path/"$file "$export_path"
+                echo "Copied (wildcard file from build path): $file"
             else
-                echo "File not found in build path: $file"
+                if [[ -f "$build_path/$file" ]]; then
+                    cp "$build_path/$file" "$export_path"
+                    echo "Copied (from build path): $file"
+                else
+                    RED "File not found in build path: $file"
+                fi
             fi
         fi
     done

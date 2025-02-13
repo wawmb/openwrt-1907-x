@@ -9,7 +9,7 @@ uboot           uboot.img
 misc            misc.img
 #resource       resource.img
 #kernel         kernel.img
-boo             boot.img
+boot            boot.img
 recovery        recovery.img
 userdata        userdata.img
 rootfs          rootfs.img
@@ -18,6 +18,6 @@ rootfs          rootfs.img
 # SELF �ǹؼ��֣���ʾ�����ļ���update.img������
 # �����������ļ�ʱ��������SELF�ļ������ݣ�����ͷ����Ϣ���м�¼
 # �ڽ�������ļ�ʱ�������SELF�ļ������ݡ�
-backup		RESERVED
+backup          RESERVED
 #update-script	update-script
 #recover-script	recover-script
