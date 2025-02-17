@@ -12,6 +12,17 @@ function BLUE() {
     echo -e "\033[34m$@\033[0m"
 }
 
+function Find_Substring() {
+    case $1 in
+    *"$2"*)
+        return 0
+        ;; # substring found
+    *)
+        return 1
+        ;; # substring not found
+    esac
+}
+
 function Select_Option() {
     choices=("$@")
     selected=1
@@ -119,6 +130,10 @@ function Build_OpenWrt-X() {
     make -j $(nproc)
     if [ $? -eq 0 ]; then
         BLUE "======================= Build OpenWrt-X Succeeded ======================="
+        if Find_Substring "$deconfig" "raxx"; then
+            cd $script_dir
+            ./rockdev/rk356x-mkupdate.sh
+        fi
     else
         RED "================== Build OpenWrt-X Failed. Please Check =================="
         exit 1

@@ -52,6 +52,7 @@ function main() {
 
 	mv update.img ../bin/targets/xspeed/kernel419232_raxx-glibc/$rockchip_board-update.img
 	BLUE "Moving update.img to ../bin/targets/xspeed/kernel419232_raxx-glibc/$rockchip_board-update.img OK."
+	BLUE "======================= Build RAXX-update.img Succeeded ======================="
 	exit $?
 }
 
