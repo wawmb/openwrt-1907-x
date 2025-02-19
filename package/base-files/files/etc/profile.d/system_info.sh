@@ -12,6 +12,7 @@ display_system_info() {
 	echo "          Kernel Version :   $(uname -r)"
 	echo "          HW Machine     :   $(uname -m)"
 	echo "          Board Name     :   $(cat /etc/os-release | grep -w 'OPENWRT_BOARD' | cut -d= -f2 | tr -d '"')"
+	echo "          Kernel Build   :   $(cat /etc/os-release | grep -w 'KERNEL_BUILD_ID' | cut -d= -f2 | tr -d '"')"
 	echo "          Memory         :   $(free -h | awk '/^Mem:/ { print $3 "/" $2 }')"
 	echo
 	echo "        Disk Usage Ranking:"

@@ -19,6 +19,9 @@ else
   SOURCE_DATE_EPOCH:=$(shell $(TOPDIR)/scripts/get_source_date_epoch.sh)
 endif
 
+KVISION:=$(shell $(TOPDIR)/scripts/get_kernel_ver.sh)
+export KVISION
+
 HOSTCC ?= $(CC)
 export REVISION
 export SOURCE_DATE_EPOCH
