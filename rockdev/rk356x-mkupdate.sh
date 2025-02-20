@@ -22,12 +22,12 @@ function main() {
 	BLUE "Start to make update.img..."
 
 	if [ ! -f "./parameter" -a ! -f "./parameter.txt" ]; then
-		RED "Error：No found parameter!"
+		RED "Error: No found parameter!"
 		exit 1
 	fi
 
 	if [ ! -f "package-file" ]; then
-		RED "Error：No found package-file!"
+		RED "Error: No found package-file!"
 		exit 1
 	fi
 
@@ -40,7 +40,12 @@ function main() {
 	fi
 
 	board_name="${rockchip_board,,}"
-	cp u-boot/xspeed/$board_name/* u-boot/
+	cp u-boot/xspeed/$board_name/uboot.img u-boot/uboot.img
+	cp u-boot/xspeed/$board_name/rk356x_spl_loader* u-boot/rk356x_spl_loader.bin
+	if [ $? -ne 0 ]; then
+		RED "Error: Copying files failed!"
+		exit 1
+	fi
 	BLUE "Making ./u-boot/xspeed/$board_name/* OK."
 
 	./afptool -pack ./ ./early_update.img || pause
