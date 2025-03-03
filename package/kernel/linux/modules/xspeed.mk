@@ -49,7 +49,7 @@ define KernelPackage/r8111
   AUTOLOAD:=$(call AutoLoad,60,r8111)
 endef
 define KernelPackage/r8111/description
-  Kernel modules for Rockchip(RAXX),
+  Kernel modules for Rockchip(RA03),
   Including the r8111 network Support.
 endef
 $(eval $(call KernelPackage,r8111))
@@ -66,3 +66,16 @@ define KernelPackage/pgdrv/description
   Including pgdrv for wirte r8111 mac Support.
 endef
 $(eval $(call KernelPackage,pgdrv))
+
+define KernelPackage/r8168
+  CATEGORY:=$(XSPEED_MENU)
+  TITLE:=Rockchip Support r8168 Ethernet
+  KCONFIG:=CONFIG_R8168
+  FILES:=$(LINUX_DIR)/drivers/net/ethernet/realtek/r8168/r8168.ko
+  AUTOLOAD:=$(call AutoLoad,60,r8168)
+endef
+define KernelPackage/r8168/description
+  Kernel modules for Rockchip(RAXX),
+  Including the r8168 network Support.
+endef
+$(eval $(call KernelPackage,r8168))

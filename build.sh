@@ -130,7 +130,7 @@ function Build_OpenWrt-X() {
     make -j $(nproc)
     if [ $? -eq 0 ]; then
         BLUE "======================= Build OpenWrt-X Succeeded ======================="
-        if Find_Substring "$deconfig" "raxx"; then
+        if Find_Substring "$deconfig" "ra"; then
             cd $script_dir
             ./rockdev/rk356x-mkupdate.sh
         fi

@@ -39,9 +39,9 @@ define Build/Compile
     CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -Dloff_t=off_t"
 endef
 
-define Package/pigz/install	
+define Package/pigz/install
 	$(INSTALL_DIR) $(1)/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pigz $(1)/sbin/	
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/pigz $(1)/sbin/
 endef
 
 $(eval $(call BuildPackage,pigz))
