@@ -1,23 +1,22 @@
 #
-# Copyright (C) 2007 OpenWrt.org
+# Copyright (C) 2025 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
 # $Id: Makefile 10812 2008-04-13 12:06:07Z olli $
 #
-# http://ftp.gnu.org/gnu/parted/parted-1.8.8.tar.bz2
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=parted
-PKG_VERSION:=3.4
+PKG_VERSION:=3.6
 PKG_RELEASE:=1
 
 PKG_INSTALL:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://ftp.gnu.org/gnu/parted/
-PKG_HASH:=e1298022472da5589b7f2be1d5ee3c1b66ec3d96dfbad03dc642afd009da5342
+PKG_HASH:=3b43dbe33cca0f9a18601ebab56b7852b128ec1a3df3a9b30ccde5e73359e612
 
 include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
