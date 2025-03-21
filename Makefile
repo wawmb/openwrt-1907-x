@@ -100,6 +100,7 @@ checksum: FORCE
 
 buildversion: FORCE
 	$(SCRIPT_DIR)/getver.sh > $(BIN_DIR)/version.buildinfo
+	$(SCRIPT_DIR)/get_kernel_ver.sh > $(BIN_DIR)/kernel_version.buildinfo
 
 feedsversion: FORCE
 	$(SCRIPT_DIR)/feeds list -fs > $(BIN_DIR)/feeds.buildinfo
