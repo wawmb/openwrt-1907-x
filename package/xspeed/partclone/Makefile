@@ -39,7 +39,7 @@ endef
 
 define Build/Compile
     $(MAKE) -C $(PKG_BUILD_DIR) $(TARGET_CONFIGURE_OPTS) \
-    CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -Dloff_t=off_t 	-L$(PKG_BUILD_DIR)../e2fsprogs-1.44.5/.pkgdir/libext2fs/usr/lib"
+    CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -Dloff_t=off_t 	-L$(PKG_BUILD_DIR)../e2fsprogs-1.47.2/.pkgdir/libext2fs/usr/lib"
 endef
 
 define Package/partclone/install	
