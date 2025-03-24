@@ -3,7 +3,7 @@
 # Copyright (C) 2025 Dustin <huangyanjie@x-speed.com.cn>
 #
 
-rename_network() {
+update_ats() {
     blkdev_f=$(cat /factory_env | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
     blkdev_c=$(cat /proc/cmdline | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
 
@@ -12,13 +12,19 @@ rename_network() {
     else
         blkdev=${blkdev_f}
     fi
-    echo "rename_network: The rootdev is [${blkdev}] !" | tee /dev/kmsg
+    echo "Update ATS: The rootdev is [${blkdev}] !" | tee /dev/kmsg
 
     if [ -b "$blkdev" ]; then
         mount "$blkdev" /mnt
         file="/mnt/rename_network.sh"
         if [ -e "$file" ]; then
             echo "rename_network: Starting ${file} script !" | tee /dev/kmsg
+            chmod +x "$file"
+            . "$file"
+        fi
+        file="/mnt/ate/ateinit.sh"
+        if [ -e "$file" ]; then
+            echo "ateinit: Starting ${file} script !" | tee /dev/kmsg
             chmod +x "$file"
             . "$file"
         fi
@@ -51,7 +57,7 @@ xspeed/lsdk*)
 *) ;;
 esac
 
-rename_network
+update_ats
 
 for if_name in $(ls /sys/class/net | grep -E '^(GE|eth)'); do
     ifconfig $if_name up
