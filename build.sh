@@ -203,7 +203,7 @@ function Pull_All_Projects() {
 function Export_The_Build_Files() {
     subtarget=$(sed -n 's/^CONFIG_TARGET_SUBTARGET="\([^"]*\)"/\1/p' $script_dir/.config)
     build_path="$script_dir/bin/targets/xspeed/$subtarget-glibc"
-    export_path=$(realpath "/data/chfsfile/board/$subtarget-glibc")
+    export_path=$(realpath "/data/share/platform/$subtarget-glibc")
     echo -e "Export Path is \e[34m $export_path \e[0m"
     read -t 8 -e -p "Change the export path? [N|Y]" ANS || :
     ANS=${ANS:-n}
