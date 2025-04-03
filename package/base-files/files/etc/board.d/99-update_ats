@@ -4,15 +4,31 @@
 #
 
 update_ats() {
-    blkdev_f=$(cat /factory_env | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
-    blkdev_c=$(cat /proc/cmdline | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
+    rootdev_f=$(cat /factory_env | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
+    rootdev_c=$(cat /proc/cmdline | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
 
-    if [ -z "${blkdev_f}" ]; then
-        blkdev=${blkdev_c}
+    atsdev_f=$(cat /factory_env | awk -F 'ats_label=' '{print$2}' | awk '{print $1}')
+    atsdev_c=$(cat /proc/cmdline | awk -F 'ats_label=' '{print$2}' | awk '{print $1}')
+
+    if [ -z "${rootdev_f}" ]; then
+        rootdev=${rootdev_c}
     else
-        blkdev=${blkdev_f}
+        rootdev=${rootdev_f}
     fi
-    echo "Update ATS: The rootdev is [${blkdev}] !" | tee /dev/kmsg
+
+    if [ -z "${atsdev_f}" ]; then
+        ats_dev=${atsdev_c}
+    else
+        ats_dev=${atsdev_f}
+    fi
+    atsdev=$(blkid | grep ${ats_dev} | awk -F : '{print $1}' | awk -F / '{print $NF}' | sed 's/[0-9]*$//;s/p$//')
+
+    if [ -z "${atsdev}" ]; then
+        blkdev=${rootdev}
+    else
+        blkdev=${atsdev}
+    fi
+    echo "Update ATS: atsdev [${atsdev}] rootdev [${rootdev}] finaldev [${blkdev}]" | tee /dev/kmsg
 
     if [ -b "$blkdev" ]; then
         mount "$blkdev" /mnt
@@ -38,9 +54,9 @@ done
 
 TARGET=$(cat /etc/os-release | grep -w 'OPENWRT_BOARD' | cut -d= -f2 | tr -d '"')
 # xspeed/linux4197_d2000 xspeed/linux419246_e2000
-# xspeed/lsdk1903_autotest xspeed/lsdk1903_NH15 xspeed/lsdk1903_NH25_autotest xspeed/lsdk1903_NZXX_ate
-# xspeed/lsdk2012_autotest xspeed/lsdk2012_nz60_autotest
-# xspeed/kernel_raxx
+# xspeed/lsdk1903_autotest xspeed/lsdk1903_NH15 xspeed/lsdk1903_NH25_aut xspeed/lsdk1903_NZXX_ate
+# xspeed/lsdk2012_autotest xspeed/lsdk2012_nz60_aut
+# xspeed/kernel419232_raxx xspeed/kernel419232_ra03
 
 case "$TARGET" in
 xspeed/lsdk*)
