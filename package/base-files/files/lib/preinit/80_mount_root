@@ -3,7 +3,26 @@
 # Copyright (C) 2010 Vertical Communications
 
 do_mount_root() {
-	mount_root
+	TARGET=$(cat /etc/os-release | grep -w 'OPENWRT_BOARD' | cut -d= -f2 | tr -d '"')
+	# xspeed/linux4197_d2000 xspeed/linux419246_e2000
+	# xspeed/lsdk1903_autotest xspeed/lsdk1903_NH15 xspeed/lsdk1903_NH25_aut xspeed/lsdk1903_NZXX_ate
+	# xspeed/lsdk2012_autotest xspeed/lsdk2012_nz60_aut
+	# xspeed/kernel419232_raxx xspeed/kernel419232_ra03
+
+	case "$TARGET" in
+	xspeed/kernel*)
+		echo "Mount: fsck checking rootfs !" | tee /dev/kmsg
+		/bin/mount -o remount,ro /
+		/usr/sbin/e2fsck -fvy /dev/mmcblk0p7
+		/bin/mount -o remount,rw,sync /
+		echo "Mount: fsck checking rootfs done !" | tee /dev/kmsg
+		;;
+	*)
+		echo "Mount: default mount_root !" | tee /dev/kmsg
+		mount_root
+		;;
+	esac
+
 	boot_run_hook preinit_mount_root
 	[ -f /sysupgrade.tgz ] && {
 		echo "- config restore -"
