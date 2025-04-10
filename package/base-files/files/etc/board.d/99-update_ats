@@ -4,43 +4,38 @@
 #
 
 update_ats() {
-    rootdev_f=$(cat /factory_env | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
-    rootdev_c=$(cat /proc/cmdline | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
+    if [[ -f /factory_env ]]; then
+        rootdev_f=$(cat /factory_env | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
+        atsdev_f=$(cat /factory_env | awk -F 'ats_label=' '{print$2}' | awk '{print $1}')
+    else
+        rootdev_f=""
+        atsdev_f=""
+    fi
 
-    atsdev_f=$(cat /factory_env | awk -F 'ats_label=' '{print$2}' | awk '{print $1}')
+    rootdev_c=$(cat /proc/cmdline | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
     atsdev_c=$(cat /proc/cmdline | awk -F 'ats_label=' '{print$2}' | awk '{print $1}')
 
-    if [ -z "${rootdev_f}" ]; then
-        rootdev=${rootdev_c}
-    else
-        rootdev=${rootdev_f}
+    rootdev=${rootdev_f:-$rootdev_c}
+    ats_dev=${atsdev_f:-$atsdev_c}
+
+    if [[ -n "$ats_dev" ]]; then
+        atsdev=$(blkid | grep ${ats_dev} | awk -F : '{print $1}' | awk -F / '{print $NF}' | sed 's/[0-9]*$//;s/p$//')
     fi
 
-    if [ -z "${atsdev_f}" ]; then
-        ats_dev=${atsdev_c}
-    else
-        ats_dev=${atsdev_f}
-    fi
-    atsdev=$(blkid | grep ${ats_dev} | awk -F : '{print $1}' | awk -F / '{print $NF}' | sed 's/[0-9]*$//;s/p$//')
-
-    if [ -z "${atsdev}" ]; then
-        blkdev=${rootdev}
-    else
-        blkdev=${atsdev}
-    fi
-    echo "Update ATS: atsdev [${atsdev}] rootdev [${rootdev}] finaldev [${blkdev}]" | tee /dev/kmsg
+    blkdev=${atsdev:-$rootdev}
+    echo "Update ATS: ats_label dev [${atsdev}] rootdev [${rootdev}] finaldev [${blkdev}] !" | tee /dev/kmsg >/dev/null
 
     if [ -b "$blkdev" ]; then
         mount "$blkdev" /mnt
         file="/mnt/rename_network.sh"
         if [ -e "$file" ]; then
-            echo "rename_network: Starting ${file} script !" | tee /dev/kmsg
+            echo "Rename_network: Starting ${file} script !" | tee /dev/kmsg >/dev/null
             chmod +x "$file"
             . "$file"
         fi
         file="/mnt/ate/ateinit.sh"
         if [ -e "$file" ]; then
-            echo "ateinit: Starting ${file} script !" | tee /dev/kmsg
+            echo "Ateinit: Starting ${file} script !" | tee /dev/kmsg >/dev/null
             chmod +x "$file"
             . "$file"
         fi
