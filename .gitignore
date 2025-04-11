@@ -26,11 +26,6 @@ git-src
 .ccache
 .vscode/
 package/utils/auto-factory/
-/feeds/freifunk.tmp
-/feeds/luci.tmp
-/feeds/packages.tmp
-/feeds/telephony.tmp
-/feeds/routing.tmp
 package/kernel/xspeed/nf51xx/src/nf51xx
 configs/.target.cfg
 rockdev/u-boot
