@@ -1,0 +1,63 @@
+--- a/tests/modetest/modetest.c	2025-01-21 19:30:12.138664018 +0800
++++ a/tests/modetest/modetest.c	2025-01-21 19:30:12.138664018 +0800
+@@ -1902,6 +1902,7 @@
+ 	int test_vsync = 0;
+ 	int test_cursor = 0;
+ 	int use_atomic = 0;
++	int times = 0;
+ 	char *device = NULL;
+ 	char *module = NULL;
+ 	unsigned int i;
+@@ -2096,6 +2097,12 @@
+ 					return 1;
+ 				}
+ 
++				sleep(5);
++				if (3 == primary_fill++)
++				{
++					primary_fill = 0;
++				}
++
+ 				pipe_args->swap_count++;
+ 				if (pipe_args->swap_count == 60) {
+ 					struct timeval end;
+@@ -2113,7 +2120,7 @@
+ 			if (drop_master)
+ 				drmDropMaster(dev.fd);
+ 
+-			getchar();
++			sleep(30);
+ 
+ 			drmModeAtomicFree(dev.req);
+ 			dev.req = drmModeAtomicAlloc();
+@@ -2140,6 +2147,8 @@
+ 				return 1;
+ 			}
+ 
++		init:
++
+ 			if (count)
+ 				set_mode(&dev, pipe_args, count);
+ 
+@@ -2155,7 +2164,20 @@
+ 			if (drop_master)
+ 				drmDropMaster(dev.fd);
+ 
+-			getchar();
++			if (3 == primary_fill++)
++			{
++				primary_fill = 0;
++				times++;
++			}
++			sleep(3);
++
++			if (times<6)
++			{
++				printf("once again!time =%d",times);
++				goto init;
++			}
++			printf("i am out!");
++			sleep(3);
+ 
+ 			if (test_cursor)
+ 				clear_cursors(&dev);

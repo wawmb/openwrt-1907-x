@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <link rel="icon" href="./favicon.ico" sizes="192x192">
+  <title>HDMI测试-创实讯联</title>
+
+  <style>
+    body {
+      background: url(./background.jpg) no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .bounce {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      color: #007eff;
+      height: 100%;
+      font: normal bold 6rem &quot;
+      Product Sans&quot;
+      ,
+      sans-serif;
+      white-space: nowrap;
+    }
+
+    .letter {
+      animation: bounce 0.75s cubic-bezier(0.05, 0, 0.2, 1) infinite alternate;
+      display: inline-block;
+      transform: translate3d(0, 0, 0);
+      margin-top: 0.5em;
+      text-shadow: rgba(255, 255, 255, 0.4) 0 0 0.05em;
+      font: normal 500 6rem &#x27;
+      Varela Round&#x27;
+      ,
+      sans-serif;
+    }
+
+    .letter:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .letter:nth-child(2) {
+      animation-delay: 0.0833333333s;
+    }
+
+    .letter:nth-child(3) {
+      animation-delay: 0.1666666667s;
+    }
+
+    .letter:nth-child(4) {
+      animation-delay: 0.25s;
+    }
+
+    .letter:nth-child(5) {
+      animation-delay: 0.3333333333s;
+    }
+
+    .letter:nth-child(6) {
+      animation-delay: 0.4166666667s;
+    }
+
+    .letter:nth-child(7) {
+      animation-delay: 0.5s;
+    }
+
+    .letter:nth-child(8) {
+      animation-delay: 0.5833333333s;
+    }
+
+    .letter:nth-child(9) {
+      animation-delay: 0.6666666667s;
+    }
+
+    .letter:nth-child(10) {
+      animation-delay: 0.75s;
+    }
+
+    .letter:nth-child(11) {
+      animation-delay: 0.8333333333s;
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: translate3d(0, 0, 0);
+        text-shadow: rgba(255, 255, 255, 0.4) 0 0 0.05em;
+      }
+
+      100% {
+        transform: translate3d(0, -1em, 0);
+        text-shadow: rgba(255, 255, 255, 0.4) 0 1em 0.35em;
+      }
+    }
+
+    .mainContainer {
+      display: block;
+      width: 1024px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .centeredVideo {
+      display: block;
+      width: 100%;
+      height: 576px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: auto;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 700px;
+      margin: 10px auto;
+      box-sizing: border-box;
+      padding: 10px
+    }
+
+    .content p {
+      line-height: 1em;
+      text-indent: 1em;
+      font-size: 15px
+    }
+
+    .foot {
+      margin: 20px 0;
+      text-align: center;
+      width: 100%;
+      color: rgb(12, 8, 56);
+      height: 20px;
+      line-height: 30px;
+      font-size: 15px;
+    }
+  </style>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+    });
+    //这是当关闭页面或浏览器的时候调用后台的方法把进程给停掉
+    window.onbeforeunload = function (e) {
+      $.ajax({
+        url: "${ctx}/zxjk/zxBasDevice/closeFfmpeg",
+        type: "post",
+        data: {
+          "command": "${command}"
+        },
+        dataType: "json",
+        async: true,
+        success: function (data) {
+        }
+      })
+    }
+  </script>
+</head>
+
+<body>
+  <br><br><br>
+  <div class="wide">
+    <div class="bounce">
+      <span class="letter" style="font-size:60px;">H</span>
+      <span class="letter" style="font-size:60px;">D</span>
+      <span class="letter" style="font-size:60px;">M</span>
+      <span class="letter" style="font-size:60px;">I</span>
+      <span class="letter" style="font-size:60px;">测</span>
+      <span class="letter" style="font-size:60px;">试</span>
+      <span class="letter" style="font-size:60px;">-</span>
+      <span class="letter" style="font-size:60px;">创</span>
+      <span class="letter" style="font-size:60px;">实</span>
+      <span class="letter" style="font-size:60px;">讯</span>
+      <span class="letter" style="font-size:60px;">联</span>
+    </div>
+  </div>
+
+  <script src="./flv.min.js"></script>
+  <div class="mainContainer">
+    <video name="videoElement" class="centeredVideo" id="videoElement" muted autoplay controls>
+      Your browser is too old which doesn't support HTML5 video.
+    </video>
+  </div>
+
+  <div class="content">
+    <p>请确认上方视频是否能在10s内正常加载播放，如若失败，请<a id="video" href="javascript:void(0)" style="color: blue;">点击此处</a>查看</p>
+    <p>如点击后无视频加载，请刷新本页面，并重新测试…如视频正常加载，请返回测试页面点击LED按钮</p>
+  </div>
+  <div class="foot">
+    <p class="copyright">&copy; Copyright 2023 Dustin Huang. 这仅仅是一个测试页面. All Rights Reserved.</p>
+  </div>
+</body>
+
+<script>
+  var video = document.getElementById("video");
+  video.onclick = function () {
+    document.getElementById("videoElement").setAttribute("src", "./video.mp4");
+  }
+
+  var flvPlayer = null;
+  if (flvjs.isSupported()) {
+    var videoElement = document.getElementById('videoElement');
+    flvPlayer = flvjs.createPlayer({
+      type: 'flv',
+      url: 'http://192.168.189.23:1877/test?port=1935&app=live&stream=dustin'
+    });
+    flvPlayer.attachMediaElement(videoElement);
+    flvPlayer.load();
+  }
+
+  videoElement.addEventListener('click', function () {
+    alert('是否支持点播视频：' + flvjs.getFeatureList().mseFlvPlayback + '； 是否支持httpflv直播流：' + flvjs.getFeatureList().mseLiveFlvPlayback + '；')
+  })
+</script>
+
+</html>

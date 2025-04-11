@@ -1,0 +1,126 @@
+--- a/src/load.c	2020-05-05 11:56:00.000000000 +0800
++++ b/src/load.c	2024-05-31 10:09:33.132380362 +0800
+@@ -1028,27 +1028,118 @@ json_t *json_loadfd(int input, size_t fl
+     return result;
+ }
+ 
+-json_t *json_load_file(const char *path, size_t flags, json_error_t *error) {
++char *remove_delimited_sections(const char *str, const char *start_delim, const char *end_delim)
++{
++    size_t result_len = 0;
++    size_t start_len = strlen(start_delim);
++    size_t end_len = strlen(end_delim);
++    char *result = NULL, *result_ptr;
++    const char *current = str, *end;
++
++    while (*current != '\0')
++    {
++        if (strncmp(current, start_delim, start_len) == 0)
++        {
++            current += start_len;
++            end = strstr(current, end_delim);
++            if (end)
++            {
++
++                current = end + end_len;
++            }
++            else
++            {
++
++                break;
++            }
++        }
++        else
++        {
++
++            result_len++;
++            current++;
++        }
++    }
++
++    result = (char *)malloc(result_len + 1);
++    if (result == NULL)
++    {
++        return NULL;
++    }
++
++    current = str;
++    result_ptr = result;
++    while (*current != '\0')
++    {
++        if (strncmp(current, start_delim, start_len) == 0)
++        {
++            current += start_len;
++            end = strstr(current, end_delim);
++            if (end)
++            {
++                current = end + end_len;
++            }
++            else
++            {
++                break;
++            }
++        }
++        else
++        {
++            *result_ptr = *current;
++            result_ptr++;
++            current++;
++        }
++    }
++    *result_ptr = '\0';
++    return result;
++}
++
++json_t *json_load_file(const char *path, size_t flags, json_error_t *error)
++{
+     json_t *result;
+     FILE *fp;
++    char *content, *processed_content;
++    long fsize;
++    ssize_t len;
+ 
+     jsonp_error_init(error, path);
+ 
+-    if (path == NULL) {
++    if (path == NULL)
++    {
+         error_set(error, NULL, json_error_invalid_argument, "wrong arguments");
+         return NULL;
+     }
+ 
+     fp = fopen(path, "rb");
+-    if (!fp) {
++    if (!fp)
++    {
+         error_set(error, NULL, json_error_cannot_open_file, "unable to open %s: %s", path,
+                   strerror(errno));
+         return NULL;
+     }
+ 
+-    result = json_loadf(fp, flags, error);
+-
++    fseek(fp, 0, SEEK_END);
++    fsize = ftell(fp);
++    fseek(fp, 0, SEEK_SET);
++    content = malloc(fsize + 1);
++    len = fread(content, 1, fsize, fp);
++    if (len != fsize)
++    {
++        error_set(error, NULL, json_error_cannot_open_file, "unable to read %s: %s", path,
++                  strerror(errno));
++        free(content);
++        return NULL;
++    }
++    content[fsize] = 0;
+     fclose(fp);
++
++    processed_content = remove_delimited_sections(content, "##", "##");
++
++    result = json_loads(processed_content, flags, error);
++
++    free(content);
++    free(processed_content);
+     return result;
+ }
+ 
