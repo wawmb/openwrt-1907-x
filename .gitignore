@@ -29,3 +29,8 @@ package/utils/auto-factory/
 package/kernel/xspeed/nf51xx/src/nf51xx
 configs/.target.cfg
 rockdev/u-boot
+/feeds/freifunk.tmp
+/feeds/luci.tmp
+/feeds/packages.tmp
+/feeds/telephony.tmp
+/feeds/routing.tmp
