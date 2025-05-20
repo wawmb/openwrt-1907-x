@@ -19,7 +19,7 @@ update_ats() {
     ats_dev=${atsdev_f:-$atsdev_c}
 
     if [[ -n "$ats_dev" ]]; then
-        atsdev=$(blkid | grep ${ats_dev} | awk -F : '{print $1}' | awk -F / '{print $NF}' | sed 's/[0-9]*$//;s/p$//')
+        atsdev=$(blkid | grep ${ats_dev} | awk -F : '{print $1}')
     fi
 
     blkdev=${atsdev:-$rootdev}
@@ -31,13 +31,13 @@ update_ats() {
         if [ -e "$file" ]; then
             echo "Rename_network: Starting ${file} script !" | tee /dev/kmsg >/dev/null
             chmod +x "$file"
-            . "$file"
+            "$file"
         fi
         file="/mnt/ate/ateinit.sh"
         if [ -e "$file" ]; then
             echo "Ateinit: Starting ${file} script !" | tee /dev/kmsg >/dev/null
             chmod +x "$file"
-            . "$file"
+            "$file"
         fi
         umount /mnt
     fi
