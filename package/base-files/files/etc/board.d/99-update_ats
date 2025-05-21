@@ -23,15 +23,23 @@ update_ats() {
     fi
 
     blkdev=${atsdev:-$rootdev}
-    echo "Update ATS: ats_label dev [${atsdev}] rootdev [${rootdev}] finaldev [${blkdev}] !" | tee /dev/kmsg >/dev/null
+    board=$(dmidecode -t0 | grep Version: | awk '{print $2}' | cut -d'_' -f2 | tr 'A-Z' 'a-z')
+    echo "Update ATS: [${board}] ats_label dev [${atsdev}] rootdev [${rootdev}] finaldev [${blkdev}] !" | tee /dev/kmsg >/dev/null
 
     if [ -b "$blkdev" ]; then
         mount "$blkdev" /mnt
-        file="/mnt/rename_network.sh"
+        file="/mnt/board/${board}/rename_network.sh"
         if [ -e "$file" ]; then
             echo "Rename_network: Starting ${file} script !" | tee /dev/kmsg >/dev/null
             chmod +x "$file"
             "$file"
+        else
+            file="/mnt/rename_network.sh"
+            if [ -e "$file" ]; then
+                echo "Rename_network: Starting ${file} script !" | tee /dev/kmsg >/dev/null
+                chmod +x "$file"
+                "$file"
+            fi
         fi
         file="/mnt/ate/ateinit.sh"
         if [ -e "$file" ]; then
