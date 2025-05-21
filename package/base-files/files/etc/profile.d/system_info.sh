@@ -17,7 +17,7 @@ display_system_info() {
 	echo
 	echo "        Disk Usage Ranking:"
 	echo "        --------------------------------------------------------------------"
-	df -h | grep -vE 'tmpfs|devtmpfs|shm' | awk '{printf "\t  %-16s %-8s %-8s %-12s %-8s %-12s\n",$1 ,$2, $3, $4 ,$5, $6}'
+	df -h | grep -vE 'tmpfs|devtmpfs|shm' | awk '{printf "          %-16s %-8s %-8s %-12s %-8s %-12s\n",$1 ,$2, $3, $4 ,$5, $6}'
 	echo
 	echo "        NetWork Information:"
 	echo "        --------------------------------------------------------------------"
@@ -27,7 +27,7 @@ display_system_info() {
 	for iface in $a; do
 		IP=$(ifconfig "$iface" | grep 'inet addr' | awk '{print $2}')
 		current_hwaddr=$(echo "$b" | sed -n "$((i + 1))p")
-		echo "$iface $current_hwaddr $IP" | awk '{printf "\t  %-12s %-25s %-22s\n",$1 ,$2 ,$3}'
+		echo "$iface $current_hwaddr $IP" | awk '{printf "          %-12s %-25s %-22s\n",$1 ,$2 ,$3}'
 		i=$((i + 1))
 	done
 	echo

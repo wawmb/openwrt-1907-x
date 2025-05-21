@@ -383,7 +383,7 @@ static const char *uart_port_strlist[UART_PORT_MAX] = {
 #else
 static const char *uart_port_strlist[UART_PORT_MAX] = {
     "/dev/ttyUSB0", "/dev/ttyUSB1", "/dev/ttyUSB2", "/dev/ttyUSB3", "/dev/ttyUSB4", "/dev/ttyUSB5", "/dev/ttyUSB6", "/dev/ttyUSB7", "/dev/ttyUSB8", "/dev/ttyUSB9",
-    "/dev/ttyAMA0", "/dev/ttyAMA1", "/dev/ttyAMA2", "/dev/ttysAMA3", "/dev/ttyAMA4", "/dev/ttyAMA5", "/dev/ttyAMA6", "/dev/ttyAMA7", "/dev/ttyAMA8", "/dev/ttyAMA9",
+    "/dev/ttyAMA0", "/dev/ttyAMA1", "/dev/ttyAMA2", "/dev/ttyAMA3", "/dev/ttyAMA4", "/dev/ttyAMA5", "/dev/ttyAMA6", "/dev/ttyAMA7", "/dev/ttyAMA8", "/dev/ttyAMA9",
     "/dev/ttyS0", "/dev/ttyS1", "/dev/ttyS2", "/dev/ttyS3", "/dev/ttyS4", "/dev/ttyS5", "/dev/ttyS6", "/dev/ttyS7", "/dev/ttyS8", "/dev/ttyS9"};
 #endif
 
