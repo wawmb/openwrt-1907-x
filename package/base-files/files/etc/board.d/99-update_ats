@@ -51,34 +51,13 @@ update_ats() {
     fi
 }
 
-for if_name in $(ls /sys/class/net | grep -E '^(GE|eth)'); do
+for if_name in $(ls /sys/class/net | grep -v can | grep -v usb | grep -v wlan | grep -vE '^(lo)' | sort -V); do
     ifconfig $if_name down
 done
 
-TARGET=$(cat /etc/os-release | grep -w 'OPENWRT_BOARD' | cut -d= -f2 | tr -d '"')
-# xspeed/linux4197_d2000 xspeed/linux419246_e2000
-# xspeed/lsdk1903_autotest xspeed/lsdk1903_NH15 xspeed/lsdk1903_NH25_aut xspeed/lsdk1903_NZXX_ate
-# xspeed/lsdk2012_autotest xspeed/lsdk2012_nz60_aut
-# xspeed/kernel419232_raxx xspeed/kernel419232_ra03
-
-case "$TARGET" in
-xspeed/lsdk*)
-    n=0
-    i=$(ls /sys/class/net | grep -E '^(GE|eth)' | wc -l)
-    while [ $n -le $i ]; do
-
-        name="eth""$n"
-        newname="GE""$n"
-        ip link set $name name $newname
-        let ++n
-    done
-    ;;
-*) ;;
-esac
-
 update_ats
 
-for if_name in $(ls /sys/class/net | grep -E '^(GE|eth)'); do
+for if_name in $(ls /sys/class/net | grep -v can | grep -v usb | grep -v wlan | grep -vE '^(lo)' | sort -V); do
     ifconfig $if_name up
 done
 
