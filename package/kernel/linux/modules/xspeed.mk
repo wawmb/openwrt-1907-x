@@ -79,3 +79,16 @@ define KernelPackage/r8168/description
   Including the r8168 network Support.
 endef
 $(eval $(call KernelPackage,r8168))
+
+define KernelPackage/rnpm
+  CATEGORY:=$(XSPEED_MENU)
+  TITLE:=Support MuChuang rnpm Ethernet
+  KCONFIG:=CONFIG_RNPM
+  FILES:=$(LINUX_DIR)/drivers/net/ethernet/rnpm/rnpm.ko
+  AUTOLOAD:=$(call AutoLoad,60,rnpm)
+endef
+define KernelPackage/rnpm/description
+  Kernel modules for MuChuang ethernet,
+  Including the rnpm network Support.
+endef
+$(eval $(call KernelPackage,rnpm))
