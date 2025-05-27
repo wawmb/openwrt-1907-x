@@ -83,7 +83,7 @@ $(eval $(call KernelPackage,r8168))
 define KernelPackage/rnpm
   CATEGORY:=$(XSPEED_MENU)
   TITLE:=Support MuChuang rnpm Ethernet
-  KCONFIG:=CONFIG_RNPM
+  KCONFIG:=CONFIG_MXGBEM
   FILES:=$(LINUX_DIR)/drivers/net/ethernet/rnpm/rnpm.ko
   AUTOLOAD:=$(call AutoLoad,60,rnpm)
 endef
