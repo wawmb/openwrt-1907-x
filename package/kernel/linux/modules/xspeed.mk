@@ -92,3 +92,16 @@ define KernelPackage/rnpm/description
   Including the rnpm network Support.
 endef
 $(eval $(call KernelPackage,rnpm))
+
+define KernelPackage/rnpgbe
+  CATEGORY:=$(XSPEED_MENU)
+  TITLE:=Support MuChuang rnpgbe Ethernet
+  KCONFIG:=CONFIG_MGBE
+  FILES:=$(LINUX_DIR)/drivers/net/ethernet/mucse/rnpgbe/rnpgbe.ko
+  AUTOLOAD:=$(call AutoLoad,60,rnpgbe)
+endef
+define KernelPackage/rnpgbe/description
+  Kernel modules for MuChuang ethernet,
+  Including the rnpgbe network Support.
+endef
+$(eval $(call KernelPackage,rnpgbe))
