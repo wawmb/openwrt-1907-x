@@ -89,6 +89,9 @@ function rockchip_build_kernel_image {
 	RA11)
 		board_dts=rk3566-xspeed-ra11-v010-linux_cfg1
 		;;
+	RA16)
+		board_dts=rk3566-xspeed-ra16-v010-linux_cfg1
+		;;
 	RA20)
 		board_dts=rk3568-xspeed-ra20-v010-linux_cfg1
 		;;
