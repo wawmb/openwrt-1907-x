@@ -17,6 +17,7 @@ include $(INCLUDE_DIR)/kernel.mk
 define Package/compiled-tools
 	CATEGORY:=X-Speed Modules
 	TITLE:=Some compiled tools that don't have source code
+	DEPENDS:=+libudev +libstdcpp +zlib
 endef
 
 define Package/compiled-tools/description
