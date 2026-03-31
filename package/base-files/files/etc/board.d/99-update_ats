@@ -3,6 +3,11 @@
 # Copyright (C) 2025 Dustin <huangyanjie@x-speed.com.cn>
 #
 
+if [ -n "$PREINIT" ]; then
+    echo "Update ATS: skip in preinit !" | tee /dev/kmsg >/dev/null
+    exit 0
+fi
+
 update_ats() {
     if [[ -f /factory_env ]]; then
         rootdev_f=$(cat /factory_env | awk -F 'rootdev=' '{print$2}' | awk '{print $1}')
