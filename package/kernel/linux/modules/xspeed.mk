@@ -105,3 +105,24 @@ define KernelPackage/rnpgbe/description
   Including the rnpgbe network Support.
 endef
 $(eval $(call KernelPackage,rnpgbe))
+
+define KernelPackage/ice
+  CATEGORY:=$(XSPEED_MENU)
+  TITLE:=Support Intel ICE Ethernet
+  KCONFIG:=CONFIG_ICE
+  FILES:= \
+    $(LINUX_DIR)/drivers/net/ethernet/intel/ice/intel_auxiliary.ko \
+    $(LINUX_DIR)/drivers/net/ethernet/intel/ice/ice.ko
+  AUTOLOAD:=$(call AutoLoad,60,ice)
+endef
+define KernelPackage/ice/install
+	$(INSTALL_DIR) $(1)/lib/firmware/intel/ice/ddp
+	$(INSTALL_DATA) \
+		$(LINUX_DIR)/drivers/net/ethernet/intel/ice/ddp/ice-1.3.59.0.pkg \
+		$(1)/lib/firmware/intel/ice/ddp/ice.pkg
+endef
+define KernelPackage/ice/description
+  Kernel modules for Intel ICE ethernet,
+  Including the ice network Support.
+endef
+$(eval $(call KernelPackage,ice))
