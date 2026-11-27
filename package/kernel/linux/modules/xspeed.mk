@@ -80,11 +80,16 @@ define KernelPackage/r8168/description
 endef
 $(eval $(call KernelPackage,r8168))
 
+ifeq ($(CONFIG_TARGET_xspeed_linux419246_e2000),y)
+  RNPM_KO:=mucse/rnpm/rnpm.ko
+else
+  RNPM_KO:=rnpm/rnpm.ko
+endif
 define KernelPackage/rnpm
   CATEGORY:=$(XSPEED_MENU)
   TITLE:=Support MuChuang rnpm Ethernet
   KCONFIG:=CONFIG_MXGBEM
-  FILES:=$(LINUX_DIR)/drivers/net/ethernet/rnpm/rnpm.ko
+  FILES:=$(LINUX_DIR)/drivers/net/ethernet/$(RNPM_KO)
   AUTOLOAD:=$(call AutoLoad,60,rnpm)
 endef
 define KernelPackage/rnpm/description
@@ -126,3 +131,29 @@ define KernelPackage/ice/description
   Including the ice network Support.
 endef
 $(eval $(call KernelPackage,ice))
+
+define KernelPackage/rnp
+  CATEGORY:=$(XSPEED_MENU)
+  TITLE:=Support MuChuang rnp Ethernet
+  KCONFIG:=CONFIG_MXGBE
+  FILES:=$(LINUX_DIR)/drivers/net/ethernet/mucse/rnp/rnp.ko
+  AUTOLOAD:=$(call AutoLoad,60,rnp)
+endef
+define KernelPackage/rnp/description
+  Kernel modules for MuChuang ethernet,
+  Including the rnp network Support.
+endef
+$(eval $(call KernelPackage,rnp))
+
+define KernelPackage/mdio_uio
+  CATEGORY:=$(XSPEED_MENU)
+  TITLE:=Enables support for reading two rgmii PHYs
+  KCONFIG:=CONFIG_MDIO_UIO
+  FILES:=$(LINUX_DIR)/drivers/net/phy/mdio_uio.ko
+  AUTOLOAD:=$(call AutoLoad,99,mdio_uio)
+endef
+define KernelPackage/mdio_uio/description
+  Kernel modules for the yt8531 network,
+  Enables support for reading two rgmii PHYs.
+endef
+$(eval $(call KernelPackage,mdio_uio))
